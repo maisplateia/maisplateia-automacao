@@ -1,15 +1,27 @@
 name: RSS Notícias Mais Plateia
 
 on:
-  schedule:
-    - cron: "*/15 * * * *"
   workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
 
 jobs:
   verificar-rss:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Baixar o RSS
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependências
         run: |
-          curl -L https://www.maisplateia.com.br/syndication/noticias/
+          pip install -r requirements.txt
+
+      - name: Executar script RSS
+        run: |
+          python scripts/rss.py
