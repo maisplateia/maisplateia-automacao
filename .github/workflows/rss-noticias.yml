@@ -1,0 +1,15 @@
+name: RSS Notícias Mais Plateia
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  verificar-rss:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar o RSS
+        run: |
+          curl -L https://www.maisplateia.com.br/syndication/noticias/
